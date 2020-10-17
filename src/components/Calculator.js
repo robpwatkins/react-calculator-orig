@@ -18,19 +18,20 @@ const Calculator = () => {
     console.log('plusOrMinus');
   }
 
-  const runOperator = tempNums => {
-    if (operator === '+') tempNums = tempNums.reduce((a, b) => a + b);
+  const runOperator = () => {
+    let tempNums = [...nums, Number(currentNum)]
+    if (operator === '=') console.log(tempNums);
+    else if (operator === '+') tempNums = tempNums.reduce((a, b) => a + b);
     else if (operator === '-') tempNums = tempNums.reduce((a, b) => a - b);
     else if (operator === 'x') tempNums = tempNums.reduce((a, b) => a * b);
     else tempNums = tempNums.reduce((a, b) => a / b);
-    setNums([tempNums]);
-    setCurrentNum(null);
+    return [tempNums];
   }
-
+  
   const equals = () => {
-    let tempNums = [...nums, Number(currentNum)]
-    if (operator === '=') console.log(tempNums, currentNum);
-    else runOperator(tempNums);
+    console.log(nums, Number(currentNum));
+    setNums(runOperator());
+    setCurrentNum(null);
   }
 
   const handleClick = event => {
