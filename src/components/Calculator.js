@@ -4,12 +4,10 @@ import Button from './Button';
 
 const Calculator = () => {
   const [nums, setNums] = useState([]);
-  const [operator, setOperator] = useState(null);
   const [currentNum, setCurrentNum] = useState(null);
 
   const clear = () => {
     setNums([]);
-    setOperator(null);
     setCurrentNum(null);
     console.log('clear');
   }
@@ -18,19 +16,18 @@ const Calculator = () => {
     console.log('plusOrMinus');
   }
 
-  const runOperator = () => {
+  const runOperator = operator => {
     let tempNums = [...nums, Number(currentNum)]
-    if (operator === '=') console.log(tempNums);
-    else if (operator === '+') tempNums = tempNums.reduce((a, b) => a + b);
+    // if (operator === '=') console.log(tempNums);
+    if (operator === '+') tempNums = tempNums.reduce((a, b) => a + b);
     else if (operator === '-') tempNums = tempNums.reduce((a, b) => a - b);
     else if (operator === 'x') tempNums = tempNums.reduce((a, b) => a * b);
-    else tempNums = tempNums.reduce((a, b) => a / b);
+    else if (operator === '/') tempNums = tempNums.reduce((a, b) => a / b);
     return [tempNums];
   }
   
-  const equals = () => {
-    console.log(nums, Number(currentNum));
-    setNums(runOperator());
+  const equals = operator => {
+    setNums(runOperator(operator));
     setCurrentNum(null);
   }
 
@@ -41,17 +38,10 @@ const Calculator = () => {
     else if (!isNaN(char)) {
       if (!currentNum) setCurrentNum(char);
       else setCurrentNum(currentNum + char);
-    }
-    else {
-      if (operator === '=') equals();
-      else {
-        setOperator(char);
-        equals();
-      }
-    }
+    } else equals(char);
   }
 
-  console.log(currentNum, nums, operator);
+  console.log(currentNum, nums);
   return (
     <div className="calculator">
       <Display />
