@@ -6,41 +6,17 @@ const Calculator = () => {
   const [nums, setNums] = useState([]);
   const [currentNum, setCurrentNum] = useState(null);
 
-  const clear = () => {
-    setNums([]);
-    setCurrentNum(null);
-    console.log('clear');
-  }
-
-  const plusOrMinus = () => {
-    console.log('plusOrMinus');
-  }
-
-  const equals = operator => {
-    let tempNums = [...nums, Number(currentNum)]
-    if (operator === '+') tempNums = tempNums.reduce((a, b) => a + b);
-    else if (operator === '-') tempNums = tempNums.reduce((a, b) => a - b);
-    else if (operator === 'x') tempNums = tempNums.reduce((a, b) => a * b);
-    else if (operator === '/') tempNums = tempNums.reduce((a, b) => a / b);
-    setNums([tempNums, currentNum]);
-    setCurrentNum(null);
-  }
-  
-  // const equals = operator => {
-    // setNums(runOperator(operator));
-  // }
-
   const handleClick = event => {
     const char = event.currentTarget.innerHTML;
-    if (char === 'A/C') clear();
-    else if (char === '±') plusOrMinus();
-    else if (!isNaN(char)) {
-      if (!currentNum) setCurrentNum(char);
-      else setCurrentNum(currentNum + char);
-    } else equals(char);
+    if (!isNaN(char)) {
+      if (!currentNum) {
+        setCurrentNum(Number(char));
+      }
+      else setCurrentNum(Number(currentNum + char));
+    }
   }
 
-  console.log(currentNum, nums);
+  console.log(currentNum);
   return (
     <div className="calculator">
       <Display />
